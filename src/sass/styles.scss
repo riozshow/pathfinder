@@ -1,0 +1,133 @@
+// VARIABLES //
+
+$bg-dark: black;
+$text-color: white;
+$cell-color: rgb(243, 104, 35);
+
+// GLOBAL //
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  overflow-x: hidden !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $bg-dark;
+  color: $text-color;
+}
+
+p,
+h1,
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  li {
+    cursor: pointer;
+  }
+}
+
+button {
+  color: white;
+  background-color: $cell-color;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+}
+
+.bg-container {
+  z-index: -1;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, transparent 0%, $bg-dark 125%);
+  }
+}
+
+.container {
+  padding: 1rem;
+  max-width: 1180px;
+}
+
+.tab-content {
+  &:not(.active) {
+    display: none;
+  }
+}
+
+// JOURNEY //
+
+.journey {
+  .super {
+    z-index: 1;
+    bottom: 10%;
+    left: 35%;
+  }
+}
+
+// BOREDOM //
+
+.boredom {
+  .super {
+    z-index: 1;
+    top: 15%;
+    left: 5%;
+  }
+}
+
+// MATRIX //
+
+.matrix {
+  margin: auto;
+  display: grid;
+  justify-content: center;
+  max-width: 500px;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.cell {
+  min-width: 30px;
+  width: 100%;
+  border: 1px solid;
+  aspect-ratio: 1/1;
+
+  &.allowed {
+    background-color: rgba($color: $cell-color, $alpha: 0.4);
+  }
+
+  &.selected {
+    background-color: rgba($color: $cell-color, $alpha: 0.75);
+  }
+
+  &.last {
+    background-color: chartreuse;
+  }
+
+  &.route {
+    background-color: brown;
+  }
+
+  &.start {
+    background-color: aqua;
+  }
+
+  &.finish {
+    background-color: blueviolet;
+  }
+}

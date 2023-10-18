@@ -11,26 +11,32 @@
 </head>
 
 <body>
-  <div class="bg-container w-100 position-absolute">
+  <div class="bg-container">
     <img alt="background" src="./images/background.jpg" class="w-100">
   </div>
   <header>
-    <ul class="d-flex justify-content-center gap-5 m-4">
-      <li id="about">About</li>
-      <li id="finder">Finder</li>
+    <ul class="d-flex justify-content-center gap-5">
+      <li>
+        <a href="#about" class="page-tab">About</a>
+      </li>
+      <li>
+        <a href="#finder" class="page-tab">Finder</a>
+      </li>
     </ul>
   </header>
+
   <section class="splash d-flex align-items-center">
     <div class="container d-flex justify-content-center">
       <div class="row">
-        <div class="d-inline-flex flex-column align-items-end p-md-3 my-md-3">
-          <h1>Pathfinder</h1>
-          <p>For travellers</p>
+        <div class="d-inline-flex flex-column align-items-end p-md-3 my-md-4">
+          <h1>PATHFINDER</h1>
+          <p>FOR TRAVELERS</p>
         </div>
       </div>
     </div>
   </section>
-  <div class="about-content tab-content">
+
+  <div class="page" pageid="about">
     <section class="py-3">
       <div class="container">
         <div class="row">
@@ -49,7 +55,7 @@
         <div class="row">
           <article class="boredom position-relative d-flex justify-content-end">
             <img src="./images/2.jpg" alt="1" class="col-xs-12 col-md-8">
-            <div class='position-absolute super'>
+            <div class="position-absolute super">
               <h2>Minimalize boredom</h2>
               <p>Pick routes that are short and attractive</p>
             </div>
@@ -58,23 +64,34 @@
       </div>
     </section>
   </div>
-  <div class="finder-content tab-content">
-    <div class="container">
-      <h2 class="text-center">Draw routes</h2>
-      <div class="matrix-wrapper d-flex justify-content-center">
+  <div class="page" pageid="finder">
+    <section>
+      <div class="container text-align-center">
+        <h2 class="text-center my-4">Draw routes</h2>
+        <div class="buttons d-flex gap-3 m-auto justify-content-center align-items-center">
+          <button type="button" class="matrix-settings size" id="matrix-10">10 x 10</button>
+          <button type="button" class="matrix-settings size" id="matrix-25">25 x 25</button>
+          <button type="button" class="matrix-settings size" id="matrix-50">50 x 50</button>
+          <button type="button" class="matrix-settings" id="matrix-full-edges">Full edges only</button>
+        </div>
+        <div class="matrix"></div>
+        <p class="text-center p-0 m-4 opacity-50">Click and hold to draw</p>
 
+        <div class="d-flex justify-content-center">
+          <button type="button" class="done-button">Finish drawing</button>
+        </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <button class="done-button">Finish drawing</button>
-      </div>
-    </div>
+    </section>
+  </div>
+  <div class="modal">
+    <h2>RESULTS</h2>
+    <h4 id="matrix-result">SHORTEST ROUTE: 24 steps</h4>
+    <button type="button" id="modal-close">Close</button>
   </div>
   <footer class="d-flex justify-content-center m-5">
     <p>All rights reserved</p>
   </footer>
-  <script src="./js/elements.js"></script>
-  <script src="./js/matrix.js"></script>
-  <script src="./js/app.js"></script>
+  <script src="./js/app.js" type="module"></script>
 </body>
 
 </html>

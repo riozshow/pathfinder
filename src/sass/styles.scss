@@ -3,6 +3,13 @@
 $bg-dark: black;
 $text-color: white;
 $cell-color: rgb(243, 104, 35);
+$cell-route: blue;
+$cell-light: white;
+$cell-allowed: chartreuse;
+$border-color: rgba(
+  $color: white,
+  $alpha: 0.3,
+);
 
 // GLOBAL //
 
@@ -10,7 +17,6 @@ $cell-color: rgb(243, 104, 35);
 *::after,
 *::before {
   box-sizing: border-box;
-  overflow-x: hidden !important;
 }
 
 ::-webkit-scrollbar {
@@ -20,7 +26,6 @@ $cell-color: rgb(243, 104, 35);
 body {
   margin: 0;
   width: 100vw;
-  height: 100vh;
   background-color: $bg-dark;
   color: $text-color;
 }
@@ -48,6 +53,10 @@ button {
 
 .bg-container {
   z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+
   &::after {
     content: "";
     width: 100%;
@@ -55,7 +64,7 @@ button {
     position: absolute;
     top: 0;
     left: 0;
-    background: linear-gradient(to bottom, transparent 0%, $bg-dark 125%);
+    background: linear-gradient(to bottom, transparent -50%, $bg-dark 100%);
   }
 }
 
@@ -64,15 +73,91 @@ button {
   max-width: 1180px;
 }
 
-.tab-content {
+.page {
   &:not(.active) {
     display: none;
+  }
+}
+
+// HEADER //
+
+header {
+  background-image: linear-gradient(to bottom, black -50%, transparent 100%);
+  position: fixed;
+  width: 100%;
+  top: 0;
+
+  ul {
+    margin: 0;
+    padding: 1rem;
+  }
+
+  li {
+    padding: 1rem 0;
+    list-style: none;
+  }
+
+  a {
+    text-shadow: 1px 1px 3px black;
+    text-decoration: none;
+    color: white;
+    font-size: large;
+    padding: 1rem;
+  }
+}
+
+// SPLASH //
+
+.splash {
+  h1 {
+    font-size: min(10vw, 100px);
+    font-weight: 300;
+    letter-spacing: 1rem;
+  }
+
+  p {
+    opacity: 0.8;
+    font-size: 30px;
+    font-weight: 300;
+    letter-spacing: 0.5rem;
+  }
+}
+
+@keyframes slidein-1 {
+  0% {
+    right: -200vw;
+    opacity: 0;
+  }
+
+  75% {
+    right: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slidein-2 {
+  0% {
+    left: -200vw;
+    opacity: 0;
+  }
+
+  75% {
+    left: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
 // JOURNEY //
 
 .journey {
+  animation: slidein-1 2s;
+
   .super {
     z-index: 1;
     bottom: 10%;
@@ -83,6 +168,8 @@ button {
 // BOREDOM //
 
 .boredom {
+  animation: slidein-2 3s;
+
   .super {
     z-index: 1;
     top: 15%;
@@ -92,42 +179,138 @@ button {
 
 // MATRIX //
 
+.buttons {
+  button {
+    background-color: rgba($color: $cell-color, $alpha: 0.1);
+    border: 2px solid $cell-color;
+
+    &.active {
+      background-color: rgba($color: $cell-color, $alpha: 1);
+      border: 2px solid $cell-color;
+    }
+  }
+}
+
 .matrix {
-  margin: auto;
   display: grid;
+  margin: 2rem auto;
   justify-content: center;
-  max-width: 500px;
-  margin: 2rem 0;
+  max-width: 700px;
   width: 100%;
+  backdrop-filter: blur(15px) brightness(0.5);
+  border: 2px solid $border-color;
+  border-radius: 10px;
 }
 
 .cell {
-  min-width: 30px;
   width: 100%;
-  border: 1px solid;
+  border: 1px outset $border-color;
   aspect-ratio: 1/1;
+  cursor: pointer;
+  //transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba($color: white, $alpha: 0.2);
+  }
+
+  &:not(.allowed, .selected) {
+    pointer-events: none;
+    cursor: default;
+  }
 
   &.allowed {
-    background-color: rgba($color: $cell-color, $alpha: 0.4);
+    background-color: rgba($color: $cell-allowed, $alpha: 0.1);
+
+    &:hover {
+      background-color: rgba($color: $cell-allowed, $alpha: 0.2);
+    }
   }
 
   &.selected {
-    background-color: rgba($color: $cell-color, $alpha: 0.75);
+    background-color: rgba($color: $cell-color, $alpha: 0.4);
+
+    &:hover {
+      background-color: rgba($color: $cell-color, $alpha: 0.5);
+    }
+  }
+
+  &.first {
+    pointer-events: none;
+    background-color: rgba($color: $cell-color, $alpha: 0.8);
   }
 
   &.last {
-    background-color: chartreuse;
+    background-color: rgba($color: $cell-allowed, $alpha: 0.6);
+
+    &:hover {
+      background-color: rgba($color: $cell-allowed, $alpha: 0.7);
+    }
   }
 
   &.route {
-    background-color: brown;
+    background-color: rgba($color: $cell-route, $alpha: 0.6);
   }
 
-  &.start {
-    background-color: aqua;
+  &.error {
+    @keyframes error {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      25% {
+        transform: rotate(-8deg);
+      }
+
+      50% {
+        transform: rotate(0deg);
+      }
+
+      75% {
+        transform: rotate(8deg);
+      }
+
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+    background-color: rgba($color: $cell-color, $alpha: 0.7);
+    animation: 0.25s infinite error;
+  }
+}
+
+// MODAL //
+
+@keyframes modal-in {
+  0% {
+    opacity: 0;
   }
 
-  &.finish {
-    background-color: blueviolet;
+  100% {
+    opacity: 1;
+  }
+}
+
+.modal {
+  color: black;
+  padding: 1.5rem;
+  min-width: 350px;
+  min-height: 200px;
+  width: 40%;
+  height: 20%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: darken(white, 10%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  border-radius: 10px;
+
+  animation: modal-in 0.5s;
+
+  &.active {
+    display: flex !important;
   }
 }
